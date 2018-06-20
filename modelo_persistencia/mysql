@@ -1,0 +1,13 @@
+MYSQL: 
+
+	-- INSERT REPOSTA
+
+INSERT INTO `simulado`.`resposta` (`id_pergunta`, `id_resposta`, `resposta`, `status_resposta`) VALUES ('1', '1', 'anualmente, com os pneus frios', 'F');
+INSERT INTO `simulado`.`resposta` (`id_pergunta`, `id_resposta`, `resposta`, `status_resposta`) VALUES ('1', '2', 'semanalmente, com os pneus aquecidos', 'F');
+
+
+	-- INSERT PERGUNTA
+
+INSERT INTO `simulado`.`pergunta` (`id_pergunta`, `pergunta`) VALUES ('1', 'Para garantir boa manutenção, os pneus devem ser calibrados:');
+INSERT INTO `simulado`.`pergunta` (`id_pergunta`, `pergunta`) VALUES ('2', 'Em caso de acidente de trânsito com vítima, para acionar o Corpo de Bombeiros, deve-se ligar para:');
+

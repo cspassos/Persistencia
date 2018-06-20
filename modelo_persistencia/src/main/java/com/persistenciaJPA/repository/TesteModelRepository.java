@@ -7,7 +7,7 @@ import com.persistenciaJPA.model.Estado;
 import com.persistenciaJPA.model.Pais;
 
 @Repository
-public interface TesteModelRepository extends JpaRepository<Estado, Integer>{
+public interface TesteModelRepository extends JpaRepository<Pais, Integer>{
 
 //	salvarPais
 }

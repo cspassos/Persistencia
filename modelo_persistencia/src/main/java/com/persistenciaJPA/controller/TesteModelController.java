@@ -31,8 +31,8 @@ public class TesteModelController {
 	}
 	
 	@RequestMapping(value="/salvarEstadoPais", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Pais> salvarEstadoPais(@RequestBody EstadoPaisDTO estado){
-		testeEntity.salvarEstadoPais(estado);
+	public ResponseEntity<Pais> salvarEstadoPais(@RequestBody Pais paisEstado){
+		testeEntity.salvarEstadoPais(paisEstado);
 		return new ResponseEntity<Pais>(HttpStatus.OK);
 	}
 	

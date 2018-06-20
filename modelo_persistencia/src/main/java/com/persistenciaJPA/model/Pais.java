@@ -1,6 +1,7 @@
 package com.persistenciaJPA.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,6 +26,9 @@ public class Pais implements Serializable{
 	private String nome;
 	@Column(name = "iso", nullable = false, length = 3)
 	private String iso;
+	
+	@OneToMany(mappedBy = "pais", cascade = CascadeType.ALL)
+	private List<Estado> estado;
 	
 	public Pais() {
 		super();
@@ -76,6 +81,14 @@ public class Pais implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public List<Estado> getEstado() {
+		return estado;
+	}
+
+	public void setEstado(List<Estado> estado) {
+		this.estado = estado;
 	}
 
 }

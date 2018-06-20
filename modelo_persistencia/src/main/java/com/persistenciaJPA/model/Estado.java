@@ -24,7 +24,7 @@ public class Estado {
 	private String uf;
 	
 	@ManyToOne //a coluna pais referencia a coluna id na tabela pais
-	@JoinColumn(name = "pais", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "pais", referencedColumnName = "id")
 	private Pais pais;
 	
 	public Integer getId() {

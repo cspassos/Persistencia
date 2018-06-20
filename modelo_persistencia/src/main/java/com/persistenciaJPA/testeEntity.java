@@ -24,15 +24,17 @@ public class testeEntity {
 	}
 	
 	@Transactional
-	public void salvarEstadoPais(EstadoPaisDTO estado) {
-		Estado e = new Estado();
+	public void salvarEstadoPais(Pais paisEstado) {
 		
-		e.setNome(estado.getNomeEstado());
-		e.setUf(estado.getUf());
-		e.setPais(new Pais());
-		e.getPais().setNome(estado.getNomePais());
-		e.getPais().setIso(estado.getIso());
+		Pais p = new Pais();
+		p.setNome(paisEstado.getNome());
+		p.setIso(paisEstado.getIso());
+		p.setEstado(paisEstado.getEstado());
+		for (Estado estado : p.getEstado()) {
+			estado.setPais(p);
+		}
 		
-		testeModelRepository.save(e);
+		
+		testeModelRepository.save(p);
 	}
 }

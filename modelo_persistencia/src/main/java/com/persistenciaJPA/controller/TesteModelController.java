@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.persistenciaJPA.testeEntity;
 import com.persistenciaJPA.DTO.EstadoPaisDTO;
 import com.persistenciaJPA.model.Estado;
 import com.persistenciaJPA.model.Pais;
+import com.persistenciaJPA.service.testeEntity;
 
 @Controller
 @CrossOrigin("*")
@@ -33,6 +33,12 @@ public class TesteModelController {
 	@RequestMapping(value="/salvarEstadoPais", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Pais> salvarEstadoPais(@RequestBody Pais paisEstado){
 		testeEntity.salvarEstadoPais(paisEstado);
+		return new ResponseEntity<Pais>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/salvarPessoaFisica", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Pais> salvarPessoaFisica(){
+		testeEntity.salvarPessoaFisica();
 		return new ResponseEntity<Pais>(HttpStatus.OK);
 	}
 	

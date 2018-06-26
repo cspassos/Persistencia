@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -37,6 +40,11 @@ public class PessoaFisica extends Pessoa implements Serializable{
 	private String senha;
 	
 	@ManyToMany
+	@JoinTable(name = "produto_pessoa_fisica", joinColumns = {
+				@JoinColumn(name = "id", nullable = false, updatable = false) },
+			inverseJoinColumns = {
+				@JoinColumn(name = "prod_id", nullable = false, updatable = false) }
+		)
 	private List<Produto> desejos;
 	
 	public PessoaFisica() {

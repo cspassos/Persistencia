@@ -1,7 +1,9 @@
 package com.persistenciaJPA.service;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -10,26 +12,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.persistenciaJPA.model.Categoria;
 import com.persistenciaJPA.model.Endereco;
 import com.persistenciaJPA.model.Estado;
+import com.persistenciaJPA.model.Marca;
 import com.persistenciaJPA.model.Pais;
 import com.persistenciaJPA.model.Pessoa;
 import com.persistenciaJPA.model.PessoaFisica;
-import com.persistenciaJPA.repository.PessoaFisicaRepository;
+import com.persistenciaJPA.model.Produto;
 import com.persistenciaJPA.repository.PessoaRepository;
+import com.persistenciaJPA.repository.ProdutoRepository;
 import com.persistenciaJPA.repository.TesteModelRepository;
 
 @Service
 public class testeEntity {
 
 	@Autowired
-	private EntityManager emf;
-	
-	@Autowired
 	private TesteModelRepository testeModelRepository;
 	
 	@Autowired 
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private ProdutoRepository produtoRepository; 
 	
 	@Transactional
 	public void salvarPais(Pais pais){
@@ -39,6 +44,14 @@ public class testeEntity {
 	//relacionamento com herança
 	@Transactional
 	public void salvarPessoaFisica() {
+		
+		PessoaFisica p = dadosPessoaFisica();
+		
+		pessoaRepository.save(p);
+	}
+	
+	public PessoaFisica dadosPessoaFisica() {
+		
 		PessoaFisica p = new PessoaFisica();
 		
 		p.setCpf("995.304.594-16");
@@ -50,7 +63,7 @@ public class testeEntity {
 		p.setSenha("213213");
 		p.setTelefone("(61)2133-1223");
 		
-		pessoaRepository.save(p);
+		return p;
 	}
 	
 	@Transactional
@@ -84,5 +97,41 @@ public class testeEntity {
 		
 		
 		testeModelRepository.save(p);
+	}
+
+	@Transactional
+	public void salvarProduto() {
+		Produto p = new Produto();
+		
+		p.setNome("Bola");
+		p.setDescricao("Bola 81");
+		p.setPreco(12.2);
+		p.setQuantidadeEstoque(10.1);
+		
+		p.setCategoria(adicionarCategoria());
+		p.setMarca(adicionarMarca());
+	
+		p.setDesejam(adicionarPessoasFisica());
+		
+		produtoRepository.save(p);
+	}
+
+	private List<PessoaFisica> adicionarPessoasFisica() {
+		List<PessoaFisica> pessoas = new ArrayList<>();
+		pessoas.add(dadosPessoaFisica());
+		
+		return pessoas;
+	}
+
+	private Marca adicionarMarca() {
+		Marca m = new Marca();
+		m.setNome("Nike");
+		return m;
+	}
+
+	private Categoria adicionarCategoria() {
+		Categoria c = new Categoria();
+		c.setNome("ESPORTE");
+		return c;
 	}
 }

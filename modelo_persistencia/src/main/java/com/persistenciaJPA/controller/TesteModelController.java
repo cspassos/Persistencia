@@ -48,4 +48,10 @@ public class TesteModelController {
 		return new ResponseEntity<Pais>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/salvarProduto", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Pais> salvarProduto(){
+		testeEntity.salvarProduto();
+		return new ResponseEntity<Pais>(HttpStatus.OK);
+	}
+	
 }

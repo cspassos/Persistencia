@@ -17,19 +17,11 @@ public class Categoria implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer cat_id;
 	@Column(name = "nome", length = 40, nullable = false)
 	private String nome;
 	
 	public Categoria() {
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNome() {
@@ -40,11 +32,19 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
+	public Integer getCat_id() {
+		return cat_id;
+	}
+
+	public void setCat_id(Integer cat_id) {
+		this.cat_id = cat_id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((cat_id == null) ? 0 : cat_id.hashCode());
 		return result;
 	}
 
@@ -57,10 +57,10 @@ public class Categoria implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Categoria other = (Categoria) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (cat_id == null) {
+			if (other.cat_id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!cat_id.equals(other.cat_id))
 			return false;
 		return true;
 	}

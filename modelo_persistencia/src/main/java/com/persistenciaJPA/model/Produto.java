@@ -3,21 +3,28 @@ package com.persistenciaJPA.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "produto")
 public class Produto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer prod_id;
 	
 	@Column(name = "nome", length = 50, nullable = false)
 	private String nome;
@@ -25,32 +32,29 @@ public class Produto implements Serializable{
 	@Column(name = "descricao", columnDefinition = "text")
 	private String descricao;
 	
-	@Column(name = "preco", columnDefinition = "decimal(12,2)")
+	@Column(name = "preco")
 	private Double preco;
 	
-	@Column(name = "quantidade_estoque", nullable = false, columnDefinition = "12,2")
+	@Column(name = "quantidade_estoque", nullable = false)
 	private Double quantidadeEstoque;
 	
-	@ManyToOne
-	@JoinColumn(name = "categoria", referencedColumnName = "id", nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "categoria", referencedColumnName = "cat_id")
 	private Categoria categoria;
 	
-	@ManyToOne
-	@JoinColumn(name = "marca", referencedColumnName = "id", nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "marca", referencedColumnName = "mar_id")
 	private Marca marca;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "produto_pessoa_fisica", joinColumns = {
+				@JoinColumn(name = "prod_id", nullable = false, updatable = false) },
+			inverseJoinColumns = {
+				@JoinColumn(name = "id", nullable = false, updatable = false) }
+		)
 	private List<PessoaFisica> desejam;
 	
 	public Produto() {
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNome() {
@@ -109,11 +113,19 @@ public class Produto implements Serializable{
 		this.desejam = desejam;
 	}
 
+	public Integer getProd_id() {
+		return prod_id;
+	}
+
+	public void setProd_id(Integer prod_id) {
+		this.prod_id = prod_id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((prod_id == null) ? 0 : prod_id.hashCode());
 		return result;
 	}
 
@@ -126,10 +138,10 @@ public class Produto implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Produto other = (Produto) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (prod_id == null) {
+			if (other.prod_id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!prod_id.equals(other.prod_id))
 			return false;
 		return true;
 	}

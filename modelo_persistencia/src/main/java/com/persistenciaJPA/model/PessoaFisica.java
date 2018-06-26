@@ -2,9 +2,11 @@ package com.persistenciaJPA.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,6 +35,9 @@ public class PessoaFisica extends Pessoa implements Serializable{
 	
 	@Column(name = "senha", nullable = false, length = 10)
 	private String senha;
+	
+	@ManyToMany
+	private List<Produto> desejos;
 	
 	public PessoaFisica() {
 		super();
@@ -66,6 +71,12 @@ public class PessoaFisica extends Pessoa implements Serializable{
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	public List<Produto> getDesejos() {
+		return desejos;
+	}
+	public void setDesejos(List<Produto> desejos) {
+		this.desejos = desejos;
 	}
 	
 }

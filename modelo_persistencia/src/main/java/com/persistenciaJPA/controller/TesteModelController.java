@@ -42,4 +42,10 @@ public class TesteModelController {
 		return new ResponseEntity<Pais>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/salvarEndereco", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Pais> salvarEndereco(){
+		testeEntity.salvarEndereco();
+		return new ResponseEntity<Pais>(HttpStatus.OK);
+	}
+	
 }

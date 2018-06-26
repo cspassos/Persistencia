@@ -1,7 +1,10 @@
 package com.persistenciaJPA.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 //MAPEAMENTO COM HERANÇA
@@ -29,6 +33,19 @@ public class Pessoa implements Serializable{
 	private String email;
 	@Column(name = "telefone", nullable = false, length = 14)
 	private String telefone;
+	
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+	private List<Endereco> enderecos;
+	
+	public void adicionarEndereco(Endereco end) {
+		//a pessoa desse endereço vai ser a pessoa dessa classe
+		end.setPessoa(this);
+		this.enderecos.add(end);
+	}
+	
+	public void removerEndereco(int index) {
+		this.enderecos.remove(index);
+	}
 	
 	public Pessoa() {
 		super();
@@ -79,5 +96,11 @@ public class Pessoa implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 }

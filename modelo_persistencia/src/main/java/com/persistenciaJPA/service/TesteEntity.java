@@ -17,6 +17,7 @@ import com.persistenciaJPA.model.Endereco;
 import com.persistenciaJPA.model.Estado;
 import com.persistenciaJPA.model.Marca;
 import com.persistenciaJPA.model.Pais;
+import com.persistenciaJPA.model.Parcela;
 import com.persistenciaJPA.model.Pessoa;
 import com.persistenciaJPA.model.PessoaFisica;
 import com.persistenciaJPA.model.Produto;
@@ -167,6 +168,21 @@ public class TesteEntity {
 		for (VendaItens item : v.getVendaItens()) {
 			item.setVenda(v);
 		}
+		
+		vendaRepository.save(v);
+//		for (VendaItens item : v.getVendaItens()) {
+//			v.adicionarItens(item);
+//		}
+		
+	}
+	
+	@Transactional
+	public void salvarParcelas() {
+		Venda v = vendaRepository.buscarVenda(1);
+		v.gerarParcelas();
+//		for (Parcela parcela : v.getListaParcelas()) {
+//			parcela.setVen
+//		}
 		
 		vendaRepository.save(v);
 //		for (VendaItens item : v.getVendaItens()) {

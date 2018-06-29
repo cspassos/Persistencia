@@ -6,13 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.persistenciaJPA.DTO.EstadoPaisDTO;
-import com.persistenciaJPA.model.Estado;
 import com.persistenciaJPA.model.Pais;
 import com.persistenciaJPA.service.TesteEntity;
 
@@ -57,6 +54,12 @@ public class TesteModelController {
 	@RequestMapping(value="/salvarVenda", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Pais> salvarVenda(){
 		testeEntity.salvarVenda();
+		return new ResponseEntity<Pais>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/salvarParcelas", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Pais> salvarParcelas(){
+		testeEntity.salvarParcelas();
 		return new ResponseEntity<Pais>(HttpStatus.OK);
 	}
 	

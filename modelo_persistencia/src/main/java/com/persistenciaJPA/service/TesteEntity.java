@@ -20,12 +20,15 @@ import com.persistenciaJPA.model.Pais;
 import com.persistenciaJPA.model.Pessoa;
 import com.persistenciaJPA.model.PessoaFisica;
 import com.persistenciaJPA.model.Produto;
+import com.persistenciaJPA.model.Venda;
+import com.persistenciaJPA.model.VendaItens;
 import com.persistenciaJPA.repository.PessoaRepository;
 import com.persistenciaJPA.repository.ProdutoRepository;
 import com.persistenciaJPA.repository.TesteModelRepository;
+import com.persistenciaJPA.repository.VendaRepository;
 
 @Service
-public class testeEntity {
+public class TesteEntity {
 
 	@Autowired
 	private TesteModelRepository testeModelRepository;
@@ -36,6 +39,8 @@ public class testeEntity {
 	@Autowired
 	private ProdutoRepository produtoRepository; 
 	
+	@Autowired
+	private VendaRepository vendaRepository;
 	@Transactional
 	public void salvarPais(Pais pais){
 //		testeModelRepository.save(pais);
@@ -115,6 +120,21 @@ public class testeEntity {
 		
 		produtoRepository.save(p);
 	}
+	
+	public Produto adicionarProduto() {
+		Produto p = new Produto();
+		
+		p.setNome("Bola");
+		p.setDescricao("Bola 81");
+		p.setPreco(12.2);
+		p.setQuantidadeEstoque(10.1);
+		
+		p.setCategoria(adicionarCategoria());
+		p.setMarca(adicionarMarca());
+	
+		p.setDesejam(adicionarPessoasFisica());
+		return p;
+	}
 
 	private List<PessoaFisica> adicionarPessoasFisica() {
 		List<PessoaFisica> pessoas = new ArrayList<>();
@@ -133,5 +153,40 @@ public class testeEntity {
 		Categoria c = new Categoria();
 		c.setNome("ESPORTE");
 		return c;
+	}
+
+	@Transactional
+	public void salvarVenda() {
+		PessoaFisica pf = pessoaRepository.buscarPessoaFisica2("1232133");
+		Venda v = new Venda();
+		
+		v.setData(Calendar.getInstance());
+		v.setParcelas(3);
+		v.setPessoaFisica(pf);
+		v.setVendaItens(adicionarItens());
+		for (VendaItens item : v.getVendaItens()) {
+			item.setVenda(v);
+		}
+		
+		vendaRepository.save(v);
+//		for (VendaItens item : v.getVendaItens()) {
+//			v.adicionarItens(item);
+//		}
+		
+	}
+
+	private List<VendaItens> adicionarItens() {
+		List<VendaItens> itens = new ArrayList<>();
+		VendaItens i = new VendaItens();
+		Produto p = produtoRepository.consultarProduto(1);
+
+		i.setProduto(p);
+		i.setQuantidade(5.0);
+		i.setValorUnitario(i.getProduto().getPreco());
+		i.setValorToal(i.getQuantidade() * i.getValorUnitario());
+		
+		itens.add(i);
+		
+		return itens;
 	}
 }

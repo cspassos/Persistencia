@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.persistenciaJPA.DTO.EstadoPaisDTO;
 import com.persistenciaJPA.model.Estado;
 import com.persistenciaJPA.model.Pais;
-import com.persistenciaJPA.service.testeEntity;
+import com.persistenciaJPA.service.TesteEntity;
 
 @Controller
 @CrossOrigin("*")
@@ -22,7 +22,7 @@ import com.persistenciaJPA.service.testeEntity;
 public class TesteModelController {
 
 	@Autowired
-	private testeEntity testeEntity;
+	private TesteEntity testeEntity;
 	
 	@RequestMapping(value="/salvar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Pais> buscaAleatoria(@RequestBody Pais pais){
@@ -51,6 +51,12 @@ public class TesteModelController {
 	@RequestMapping(value="/salvarProduto", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Pais> salvarProduto(){
 		testeEntity.salvarProduto();
+		return new ResponseEntity<Pais>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/salvarVenda", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Pais> salvarVenda(){
+		testeEntity.salvarVenda();
 		return new ResponseEntity<Pais>(HttpStatus.OK);
 	}
 	

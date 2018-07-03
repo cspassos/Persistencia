@@ -1,6 +1,12 @@
 package com.persistenciaJPA.service;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -15,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.persistenciaJPA.model.Categoria;
 import com.persistenciaJPA.model.Endereco;
 import com.persistenciaJPA.model.Estado;
+import com.persistenciaJPA.model.Foto;
 import com.persistenciaJPA.model.Marca;
 import com.persistenciaJPA.model.Pais;
 import com.persistenciaJPA.model.Parcela;
@@ -23,6 +30,7 @@ import com.persistenciaJPA.model.PessoaFisica;
 import com.persistenciaJPA.model.Produto;
 import com.persistenciaJPA.model.Venda;
 import com.persistenciaJPA.model.VendaItens;
+import com.persistenciaJPA.repository.FotoRepository;
 import com.persistenciaJPA.repository.PessoaRepository;
 import com.persistenciaJPA.repository.ProdutoRepository;
 import com.persistenciaJPA.repository.TesteModelRepository;
@@ -42,6 +50,10 @@ public class TesteEntity {
 	
 	@Autowired
 	private VendaRepository vendaRepository;
+	
+	@Autowired
+	private FotoRepository fotoRepository; 
+	
 	@Transactional
 	public void salvarPais(Pais pais){
 //		testeModelRepository.save(pais);
@@ -204,5 +216,30 @@ public class TesteEntity {
 		itens.add(i);
 		
 		return itens;
+	}
+	
+	@Transactional
+	public void salvarFoto() throws IOException {
+		Produto p = produtoRepository.consultarProduto(1);
+		Foto f = new Foto();
+		
+		f.setNome("dead.jpg");
+		f.setDescricao("Foto do produto");
+		
+		Path path = Paths.get("/home/caic/Imagens/dead.jpg");
+		f.setArquivo(Files.readAllBytes(path));
+		p.adicionarFoto(f);
+		
+		produtoRepository.save(p);
+	}
+	
+	public void visualizarFoto() throws IOException {
+		Foto f = fotoRepository.consultarFoto(2);
+		
+		File file = new File("/home/caic/Downloads/dead.jpg");
+		FileOutputStream out = new FileOutputStream(file);
+		
+		out.write(f.getArquivo());
+		out.close();
 	}
 }

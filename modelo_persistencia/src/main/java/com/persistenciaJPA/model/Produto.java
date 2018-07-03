@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -54,7 +55,20 @@ public class Produto implements Serializable{
 		)
 	private List<PessoaFisica> desejam;
 	
+	
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	private List<Foto> fotos;
+	
 	public Produto() {
+	}
+	
+	public void adicionarFoto(Foto obj) {
+		obj.setProduto(this);
+		this.fotos.add(obj);
+	}
+	
+	public void removerFoto(int index) {
+		this.fotos.remove(index);
 	}
 
 	public String getNome() {

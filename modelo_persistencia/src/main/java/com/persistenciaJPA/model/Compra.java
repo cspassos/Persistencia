@@ -2,10 +2,13 @@ package com.persistenciaJPA.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,7 +29,23 @@ public class Compra implements Serializable{
 	@Column(name = "valor_total", nullable = false)
 	private Double valorTotal;
 	
+	@OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<CompraItem> compraItems; 
+	
 	public Compra() {
+		valorTotal = 0.0;
+	}
+	
+	public void adicionarItem(CompraItem obj) {
+		obj.setCompra(this);
+		valorTotal += obj.getValorToTal();
+		this.compraItems.add(obj);
+	}
+	
+	public void removerItem(int index) {
+		CompraItem obj = (CompraItem) this.compraItems.get(index);
+		valorTotal -= obj.getValorToTal();
+		this.compraItems.remove(index); 
 	}
 	
 	public CompraID getId() {

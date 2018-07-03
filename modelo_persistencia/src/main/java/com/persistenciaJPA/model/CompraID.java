@@ -16,7 +16,7 @@ public class CompraID implements Serializable{
 	private Integer numeroNota;
 	
 	@ManyToOne
-	@JoinColumn(name = "pessoaJuridica", referencedColumnName = "id")
+	@JoinColumn(name = "pessoa_Juridica", referencedColumnName = "id")
 	private PessoaJuridica pessoaJuridica;
 	
 	public CompraID() {
